@@ -5,31 +5,18 @@ export type TextAreaProps = {
   defaultValue?: string;
   disabled?: boolean;
   maxLength?: number;
-  onBlur?: (s: string) => void;
 };
 
 const TextArea: React.FC<TextAreaProps> = ({
   autoFocus,
   defaultValue,
   disabled,
-  maxLength = 1024,
-  onBlur,
+  maxLength = 1024000,
 }): JSX.Element => {
   const inputProps = {
     maxLength: maxLength,
   };
 
-  const handleOnBlur = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ): void => {
-    if (disabled) {
-      return;
-    }
-    if (onBlur) {
-      const input = e.currentTarget.value;
-      onBlur(input);
-    }
-  };
 
   return (
     <>
@@ -37,13 +24,12 @@ const TextArea: React.FC<TextAreaProps> = ({
         className="class"
         id="outlined-multiline-flexible"
         autoFocus={autoFocus}
-        label="Leave a comment"
+        label="Write down your document!"
         multiline
-        rows="4"
+        rows="40"
         defaultValue={defaultValue}
         inputProps={inputProps}
         disabled={disabled}
-        onBlur={handleOnBlur}
         variant="outlined"
       />
     </>
