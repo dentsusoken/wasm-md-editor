@@ -15,5 +15,7 @@ pulldown-cmark =  "0.9.1"
 features = [
     'Window',
 ]
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
 
 version = "0.3.57"
