@@ -2,33 +2,31 @@ import React, { useEffect, useState } from "react";
 import { render } from "react-dom";
 import TextArea from "./components/Textarea";
 import "./index.css";
-import { wasm_main } from "wasm-md-editor";
-// import { wasm_main } from "wasm-md-editor";
+import { wasm_main } from "wasm-md-editor/wasm_md_editor";
 
 export type IWasmMain = {
-  wasmMain: typeof wasm_main;
+  wasm_main: typeof wasm_main;
 };
 
 export type AppType = {
   text?: string;
 };
-const useMarkdownParser = () => {
+export const useMarkdownParser = () => {
   const [state, setState] = useState<IWasmMain | null>(null);
   useEffect(() => {
-    (async () => {
-      const wasmContainer = await import("wasm-md-editor");
-      setState(wasmContainer);
-    })();
+    import("wasm-md-editor/wasm_md_editor").then((res) => {
+      return setState(res);
+    });
   }, []);
   return state;
 };
-const App: React.FC<AppType> = (text): JSX.Element => {
+const App: React.FC<AppType> = ({ text }): JSX.Element => {
   const instance = useMarkdownParser();
   return (
     <>
       <div
         dangerouslySetInnerHTML={{
-          __html: instance?.wasmMain(text) ?? "",
+          __html: instance?.wasm_main(text as string) ?? "",
         }}
       />
       <TextArea
