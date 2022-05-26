@@ -3,23 +3,23 @@ import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import TextArea from "./components/Textarea";
 import "./index.css";
-import * as wasm_main from "wasm-md-editor";
+import {wasm_main} from "wasm-md-editor";
 
 export type IWasmMain = {
   wasm_main: typeof wasm_main;
 };
 
 export type AppType = {
-  text?: string;
+  text: string;
 };
 export const useMarkdownParser = () => {
-  const [state, setState] = useState<any>(null);
+  const [state, setState] = useState<IWasmMain | null>(null);
   useEffect(() => {
     (async () => {
-      const wasmContainer = await import("wasm-md-editor/wasm_md_editor_bg.wasm").then(module =>{
-        setState(wasmContainer);
+      await import("wasm-md-editor").then((module) => {
+        setState(module);
+        
       });
-      
     })();
   }, []);
   return state;
@@ -30,7 +30,7 @@ const App: React.FC<AppType> = ({ text }): JSX.Element => {
     <>
       <div
         dangerouslySetInnerHTML={{
-          __html: instance?.wasm_main(text as string) ?? "",
+          __html: instance?.wasm_main(text) ?? "",
         }}
       />
       <TextArea
@@ -47,4 +47,4 @@ const App: React.FC<AppType> = ({ text }): JSX.Element => {
   );
 };
 const root = createRoot(document.getElementById("root")!);
-root.render(<App />);
+root.render(<App text={"# aiuro"} />);
