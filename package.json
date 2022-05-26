@@ -1,5 +1,5 @@
 {
-  "name": "wasm-markdown-editor",
+  "name": "wasm-md-editor",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,7 +12,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
-    "wasm-md-editor": "file:./wasm-md-editor/pkg",
+    "wasm-md-editor": "file:wasm-md-editor/pkg",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -54,6 +54,5 @@
     "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0"
-
   }
 }
