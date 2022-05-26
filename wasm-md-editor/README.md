@@ -1,6 +1,8 @@
 # wasm-md-editor
 wasm-md-editorはReactベースでMarkdownのparserに[pulldown-cmark](https://github.com/raphlinus/pulldown-cmark)を利用したMarkdownエディタです。
 
+## WebAssembly
+ブラウザで稼働するバイナリ形式のアセンブリ言語。
 
 ## wasm-pack
 WebAssemblyのコンパイルや、パッケージのビルドにはwasm-packを利用。
