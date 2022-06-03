@@ -1,27 +1,34 @@
 use yew::prelude::*;
+use yew_router::prelude::*;
+mod components;
+use components::Home::Home;
+use components::NotFound::NotFound;
 
-struct Model {
-    value: i64,
+#[derive(Clone, Routable, PartialEq)]
+enum Routing {
+    #[at("/")]
+    Home,
+    #[at("/editor")]
+    Editor,
+    #[not_found]
+    #[at("/404")]
+    NotFound,
 }
 
 #[function_component(App)]
 fn app() -> Html {
-    let state = use_state(|| Model { value: 0 });
-    let onclick = {
-        let state = state.clone();
-
-        Callback::from(move |_| {
-            state.set(Model {
-                value: state.value + 1,
-            })
-        })
-    };
-
     html! {
-        <div>
-            <button {onclick}>{"+1"}</button>
-            <p>{state.value}</p>
-        </div>
+        <BrowserRouter>
+            <Switch<Routing> render={Switch::render(switch)} />
+        </BrowserRouter>
+    }
+}
+
+fn switch(routes: &Routing) -> Html {
+    match routes {
+        Routing::Home => html! {<Home />},
+        Routing::Editor => html! {<App />},
+        Routing::NotFound => html! {<NotFound />},
     }
 }
 

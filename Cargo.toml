@@ -9,4 +9,4 @@ edition = "2021"
 js-sys = "0.3.57"
 pulldown-cmark =  "0.9.1"
 yew = "0.19"
-
+yew-router = "0.16.0"
