@@ -11,7 +11,7 @@ pub struct Props {
 
 #[function_component(Text)]
 pub fn text() -> Html {
-    let value = use_state(|| "init".to_string());
+    let value = use_state(|| String::from(""));
     let on_input = {
         let value = value.clone();
 
@@ -22,7 +22,7 @@ pub fn text() -> Html {
     };
 
     html! {
-        <textarea value={value.to_string()} oninput={on_input} />
+        <textarea rows="140" cols="100" value={value.to_string()} oninput={on_input} />
     }
 }
 
