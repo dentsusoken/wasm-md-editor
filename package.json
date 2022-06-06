@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "yew-styles": "^0.10.3"
+  }
+}

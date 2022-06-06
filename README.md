@@ -105,3 +105,6 @@ impl<IN, F: Fn(IN) + 'static> From<F> for Callback<IN> {
 ````
 
 
+# TODO
+- Previewつくる
+- 
