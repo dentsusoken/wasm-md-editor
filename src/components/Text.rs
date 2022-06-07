@@ -1,6 +1,7 @@
-use stylist::{css, style};
 use web_sys::HtmlTextAreaElement;
 use yew::prelude::*;
+
+use super::markdown::Markdown;
 
 #[function_component(Text)]
 pub fn text() -> Html {
@@ -39,6 +40,7 @@ pub fn text() -> Html {
                 <textarea rows="140" cols="100" value={value.to_string()} oninput={on_input} />
             </div>
             <div>
+                <Markdown markdwon_data={value.to_string()} />
                 {value.to_string()}
             </div>
         </div>

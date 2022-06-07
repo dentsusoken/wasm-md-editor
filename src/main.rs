@@ -5,6 +5,7 @@ use components::home::Home;
 use components::not_found::NotFound;
 use components::text::Text;
 
+
 #[derive(Clone, Routable, PartialEq)]
 enum Routing {
     #[at("/")]
