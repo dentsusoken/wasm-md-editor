@@ -25,4 +25,3 @@ pub fn text() -> Html {
         <textarea rows="140" cols="100" value={value.to_string()} oninput={on_input} />
     }
 }
-

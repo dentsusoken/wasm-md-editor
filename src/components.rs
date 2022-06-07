@@ -1,3 +1,3 @@
-pub mod Home;
-pub mod NotFound;
-pub mod Text;
+pub mod home;
+pub mod not_found;
+pub mod text;

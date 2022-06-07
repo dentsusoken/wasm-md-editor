@@ -1,9 +1,9 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
 mod components;
-use components::Home::Home;
-use components::NotFound::NotFound;
-use components::Text::Text;
+use components::home::Home;
+use components::not_found::NotFound;
+use components::text::Text;
 #[derive(Clone, Routable, PartialEq)]
 enum Routing {
     #[at("/")]
