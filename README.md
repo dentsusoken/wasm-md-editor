@@ -107,4 +107,4 @@ impl<IN, F: Fn(IN) + 'static> From<F> for Callback<IN> {
 
 # TODO
 - Previewつくる
-- 
+- https://docs.rs/pulldown-cmark/latest/pulldown_cmark/  をもとにExampleソース書いてMarkdownのレンダリングを試してみる
