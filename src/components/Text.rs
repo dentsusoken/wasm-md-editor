@@ -1,16 +1,27 @@
-use wasm_bindgen::{JsCast, UnwrapThrowExt};
+use stylist::{css, style};
 use web_sys::HtmlTextAreaElement;
-use web_sys::{Event, HtmlInputElement, InputEvent};
 use yew::prelude::*;
-
-#[derive(Properties, PartialEq, Clone)]
-pub struct Props {
-    pub input: String,
-    pub on_change: Callback<String>,
-}
 
 #[function_component(Text)]
 pub fn text() -> Html {
+    // let split_style = css!(
+    //     r#"
+    //     display: block;
+    //     "#
+    // );
+    // let split_item = css!(
+    //     r#"
+    //     display: block;
+    //     width: auto;
+    //     "#
+    // );
+    // let split_left_inner = css!(
+    //     r#"
+    //     position: inherit;
+    //     width: auto;
+    //     "#
+    // );
+
     let value = use_state(|| String::from(""));
     let on_input = {
         let value = value.clone();
@@ -22,6 +33,15 @@ pub fn text() -> Html {
     };
 
     html! {
-        <textarea rows="140" cols="100" value={value.to_string()} oninput={on_input} />
+        <>
+        <div>
+            <div>
+                <textarea rows="140" cols="100" value={value.to_string()} oninput={on_input} />
+            </div>
+            <div>
+                {value.to_string()}
+            </div>
+        </div>
+        </>
     }
 }

@@ -4,6 +4,7 @@ mod components;
 use components::home::Home;
 use components::not_found::NotFound;
 use components::text::Text;
+
 #[derive(Clone, Routable, PartialEq)]
 enum Routing {
     #[at("/")]
@@ -29,7 +30,10 @@ fn app() -> Html {
 fn switch(routes: &Routing) -> Html {
     match routes {
         Routing::Home => html! {<Home />},
-        Routing::Text => html! {<Text  />},
+        Routing::Text => html! {
+            <Text  />
+
+        },
         Routing::NotFound => html! {<NotFound />},
     }
 }
