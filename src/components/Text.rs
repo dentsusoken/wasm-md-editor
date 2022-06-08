@@ -1,27 +1,17 @@
+use super::markdown::Markdown;
+use css_in_rust::style::Style;
 use web_sys::HtmlTextAreaElement;
 use yew::prelude::*;
 
-use super::markdown::Markdown;
-
 #[function_component(Text)]
 pub fn text() -> Html {
-    // let split_style = css!(
-    //     r#"
-    //     display: block;
-    //     "#
-    // );
-    // let split_item = css!(
-    //     r#"
-    //     display: block;
-    //     width: auto;
-    //     "#
-    // );
-    // let split_left_inner = css!(
-    //     r#"
-    //     position: inherit;
-    //     width: auto;
-    //     "#
-    // );
+    let style = Style::create(
+        "Text",
+        r#"
+    background-color: black;
+    "#,
+    )
+    .unwrap();
 
     let value = use_state(|| String::from(""));
     let on_input = {
