@@ -5,14 +5,7 @@ use yew::prelude::*;
 
 #[function_component(Text)]
 pub fn text() -> Html {
-    let style = Style::create(
-        "Text",
-        r#"
-    background-color: black;
-    "#,
-    )
-    .unwrap();
-
+  
     let value = use_state(|| String::from(""));
     let on_input = {
         let value = value.clone();
@@ -25,11 +18,11 @@ pub fn text() -> Html {
 
     html! {
         <>
-        <div>
-            <div>
+        <div class="container">
+            <div class="item">
                 <textarea rows="140" cols="100" value={value.to_string()} oninput={on_input} />
             </div>
-            <div>
+            <div class="item">
                 <Markdown markdwon_data={value.to_string()} />
                 {value.to_string()}
             </div>
