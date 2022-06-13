@@ -1,5 +1,4 @@
 use super::markdown::Markdown;
-use css_in_rust::style::Style;
 use web_sys::HtmlTextAreaElement;
 use yew::prelude::*;
 
