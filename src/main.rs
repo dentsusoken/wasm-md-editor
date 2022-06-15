@@ -1,17 +1,17 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
 mod components;
-use components::home::Home;
+mod pages;
+use components::editor::Text;
 use components::not_found::NotFound;
-use components::text::Text;
-
+use pages::top::Top;
 
 #[derive(Clone, Routable, PartialEq)]
-enum Routing {
+pub enum Routing {
     #[at("/")]
     Home,
     #[at("/editor")]
-    Text,
+    Editor,
     #[not_found]
     #[at("/404")]
     NotFound,
@@ -30,8 +30,10 @@ fn app() -> Html {
 
 fn switch(routes: &Routing) -> Html {
     match routes {
-        Routing::Home => html! {<Home />},
-        Routing::Text => html! {
+        Routing::Home => html! {
+            <Top />
+        },
+        Routing::Editor => html! {
             <Text  />
 
         },
