@@ -32,7 +32,7 @@ pub fn text() -> Html {
         <>
         <div class="container">
             <div class="item">
-                <textarea value={value.to_string()} oninput={on_input} />
+                <textarea rows="140" cols="100" value={value.to_string()} oninput={on_input} />
             </div>
             <div class="item" >
                 {vnode}

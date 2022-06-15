@@ -9,7 +9,7 @@ pub fn top() -> Html {
     html! {
         <>
         <Home />
-        <button {onclick}>{"Start editing markdown"}</ button>
+        <button class="button" {onclick}>{"Start"}</ button>
         </>
     }
 }

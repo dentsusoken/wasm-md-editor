@@ -5,3 +5,12 @@
 .item {
     width: 100%;
 }
+
+.button {
+    color: rgb(0, 0, 0);
+    background-color: #fd8733;
+}
+
+button:hover {
+    background: #f8b38b;
+}
