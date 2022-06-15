@@ -21,9 +21,9 @@ pub fn text() -> Html {
             <div class="item">
                 <textarea rows="140" cols="100" value={value.to_string()} oninput={on_input} />
             </div>
-            <div class="item" setInnerHTML={cmark(&value)}>
+            <div class="item" >
                 //<Markdown markdwon_data={value.to_string()} />
-                // {cmark(&value)}
+                {cmark(&value)}
             </div>
         </div>
         </>
