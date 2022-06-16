@@ -3,7 +3,7 @@ use yew_router::prelude::*;
 mod components;
 mod pages;
 use components::editor::Text;
-use components::not_found::NotFound;
+use pages::not_found::NotFound;
 use pages::top::Top;
 
 #[derive(Clone, Routable, PartialEq)]
