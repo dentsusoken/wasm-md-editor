@@ -1,9 +1,9 @@
 # wasm-md-editor
 wasm-md-editorはフロントエンドに[Yew](https://yew.rs/ja/)を、Markdownのparserに[pulldown-cmark](https://github.com/raphlinus/pulldown-cmark)を利用したMarkdownエディタ。
 
-### Table of contents
+#### Table of contents
 - [wasm-md-editor](#wasm-md-editor)
-    - [Table of contents](#table-of-contents)
+      - [Table of contents](#table-of-contents)
   - [Yew](#yew)
     - [Yew内部で使われる主要ライブラリ](#yew内部で使われる主要ライブラリ)
 - [WebAssembly](#webassembly)
