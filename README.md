@@ -8,8 +8,6 @@ wasm-md-editorはフロントエンドに[Yew](https://yew.rs/ja/)を、Markdown
     - [Yew内部で使われる主要ライブラリ](#yew内部で使われる主要ライブラリ)
 - [WebAssembly](#webassembly)
   - [Trunk](#trunk)
-  - [Yew](#yew-1)
-    - [Callback](#callback)
 
 
 ## Yew
@@ -30,6 +28,11 @@ wasm-md-editorはフロントエンドに[Yew](https://yew.rs/ja/)を、Markdown
 
 
 
+TODO:
+- bindgenマクロ当たりを追記する。Yew内部で使っている部分。https://yew.rs/ja/docs/concepts/wasm-bindgen
+- WebAssemblyの説明追記と、バンドラの比較記載
+- ソースコード解説
+- YewのStyleについて追記
 
 
 
@@ -43,57 +46,3 @@ wasm-md-editorはフロントエンドに[Yew](https://yew.rs/ja/)を、Markdown
 
 - wasm-packはRustのソースコードをJsコードにコンパイルし、Jsモジュールで利用可能にするためのバンドルツール
 - TrunkはRustのコードをJSやその他のアセット(html,image, css)にまとめるためのバンドルツール
-
-## Yew 
-Yewは
-
-### Callback
-Callbackを利用することで、画面のイベント処理時にコンポーネントやDOMと非同期的に通信できる。
-
-
-````rs
-#[function_component(App)]
-fn app() -> Html {
-    let state = use_state(|| Model { value: 0 });
-    let onclick = {
-        let state = state.clone();
-
-        Callback::from(move |_| {
-            state.set(Model {
-                value: state.value + 1,
-            })
-        })
-    };
-````
-
-Callbackは
-````rs
-pub enum Callback<IN> {
-    /// A callback which can be called multiple times with optional modifier flags
-    Callback {
-        /// A callback which can be called multiple times
-        cb: Rc<dyn Fn(IN)>,
-
-        /// Setting `passive` to [Some] explicitly makes the event listener passive or not.
-        /// Yew sets sane defaults depending on the type of the listener.
-        /// See
-        /// [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener).
-        passive: Option<bool>,
-    },
-
-    /// A callback which can only be called once. The callback will panic if it is
-    /// called more than once.
-    CallbackOnce(Rc<CallbackOnce<IN>>),
-}
-
-impl<IN, F: Fn(IN) + 'static> From<F> for Callback<IN> {
-    fn from(func: F) -> Self {
-        Callback::Callback {
-            cb: Rc::new(func),
-            passive: None,
-        }
-    }
-}
-
-````
-
