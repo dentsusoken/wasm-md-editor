@@ -42,12 +42,14 @@ pub fn text() -> Html {
 
     html! {
         <>
-        <div class="container">
-            <div class="item">
-                <textarea class={style} rows="140" cols="100" value={value.to_string()} oninput={on_input} />
-            </div>
-            <div class="item" >
-                {vnode}
+        <div class="markdown-body">
+            <div class="container">
+                <div class="item">
+                    <textarea class={style} rows="140" cols="100" value={value.to_string()} oninput={on_input} />
+                </div>
+                <div class="item" >
+                    {vnode}
+                </div>
             </div>
         </div>
         </>
