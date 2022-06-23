@@ -37,6 +37,7 @@ wasm-bindgen内で使われるweb-sys, js-sysがRustのコードをWebAPIやJava
 
 TODO:
 - bindgenマクロ当たりを追記する。Yew内部で使っている部分。https://yew.rs/ja/docs/concepts/wasm-bindgen
+  - https://github.com/yewstack/yew/blob/master/packages/yew-macro/src/lib.rs
 - WebAssemblyの説明追記と、バンドラの比較記載
 - ソースコード解説
 - YewのStyleについて追記
