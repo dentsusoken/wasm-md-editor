@@ -8,6 +8,8 @@ wasm-md-editorはフロントエンドに[Yew](https://yew.rs/ja/)を、Markdown
   - [Yew](#yew)
     - [Yew内部で使われる主要ライブラリ](#yew内部で使われる主要ライブラリ)
     - [wasm-bindgen](#wasm-bindgen)
+  - [Yewの実装](#yewの実装)
+    - [Componentの定義](#componentの定義)
 - [WebAssembly](#webassembly)
   - [Trunk](#trunk)
 
@@ -32,7 +34,23 @@ wasm-md-editorはフロントエンドに[Yew](https://yew.rs/ja/)を、Markdown
 #[wasm-bindgen]アトリビュートはRustとJavascriptを変換することができ、Javascriptの型をRustのコードで表現することができる。(Javascript→Rustも可)  
 wasm-bindgen内で使われるweb-sys, js-sysがRustのコードをWebAPIやJavascriptAPIにバインドすることでこれを実現している。
 
+## Yewの実装
 
+### Componentの定義
+
+````rs
+#[proc_macro_error::proc_macro_error]
+#[proc_macro_attribute]
+pub fn function_component(attr: TokenStream, item: TokenStream) -> proc_macro::TokenStream {
+    let item = parse_macro_input!(item as FunctionComponent);
+    let attr = parse_macro_input!(attr as FunctionComponentName);
+
+    function_component_impl(attr, item)
+        .unwrap_or_else(|err| err.to_compile_error())
+        .into()
+}
+
+````
 
 
 TODO:
