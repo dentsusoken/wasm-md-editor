@@ -1,22 +1,36 @@
 use pulldown_cmark::{html, Options, Parser};
 use stylist::style;
+use stylist::yew::styled_component;
 use web_sys::HtmlTextAreaElement;
 use web_sys::Node;
 use yew::prelude::*;
-use stylist::yew::styled_component;
 use yew::virtual_dom::VNode;
 
 // #[function_component(Text)]
 #[styled_component(Text)]
 pub fn text() -> Html {
-
     let style = style!(
         r#"
         background-color: #1e2126;
         color: #fff;
         font-family: inherit;
         "#
-    ).expect("Failed to styled.");
+    )
+    .expect("Failed to styled.");
+
+    let container = style!(
+        r#"
+        display: flex;
+        "#
+    )
+    .expect("Failed to styled.");
+
+    let item = style!(
+        r#"
+        width: 100%;
+        "#
+    )
+    .expect("Failed to styled.");
 
     let value = use_state(|| String::from(""));
     let on_input = {
@@ -43,8 +57,8 @@ pub fn text() -> Html {
     html! {
         <>
         <div class="markdown-body">
-            <div class="container">
-                <div class="item">
+            <div class={container}>
+                <div class={item}>
                     <textarea class={style} rows="140" cols="100" value={value.to_string()} oninput={on_input} />
                 </div>
                 <div class="item" >
