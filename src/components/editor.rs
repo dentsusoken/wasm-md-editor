@@ -14,8 +14,8 @@ pub fn text() -> Html {
         background-color: #1e2126;
         color: #fff;
         font-family: inherit;
-        rows: "140";
-        cols: "100";
+        rows: 140;
+        cols: 100;
         "#
     )
     .expect("Failed to styled.");
