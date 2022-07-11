@@ -14,8 +14,7 @@ pub fn text() -> Html {
         background-color: #1e2126;
         color: #fff;
         font-family: inherit;
-        rows: 140;
-        cols: 100;
+        margin: 2rem;
         "#
     )
     .expect("Failed to styled.");
@@ -29,7 +28,7 @@ pub fn text() -> Html {
 
     let item = style!(
         r#"
-        width: 100%;
+        
         "#
     )
     .expect("Failed to styled.");
@@ -61,7 +60,7 @@ pub fn text() -> Html {
         <div class="markdown-body">
             <div class={container}>
                 <div class={item}>
-                    <textarea class={style} value={value.to_string()} oninput={on_input} />
+                    <textarea class={style} rows="140" cols="100" value={value.to_string()} oninput={on_input} />
                 </div>
                 <div class="item" >
                     {vnode}
