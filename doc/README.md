@@ -1,3 +1,78 @@
+<h1>TOC</h1>
+
+- [背景](#背景)
+- [ディレクトリ構成](#ディレクトリ構成)
+- [本資料の目的](#本資料の目的)
+- [主要ライブラリ](#主要ライブラリ)
+  - [Yew](#yew)
+    - [Yew内部で使われる主要ライブラリ](#yew内部で使われる主要ライブラリ)
+    - [wasm-bindgen](#wasm-bindgen)
+  - [Yewの実装](#yewの実装)
+    - [Componentの定義](#componentの定義)
+  - [Rustにおけるマクロとは](#rustにおけるマクロとは)
+    - [つまるところ何がうれしいのか](#つまるところ何がうれしいのか)
+  - [Yewでのアトリビュート](#yewでのアトリビュート)
+    - [#[function_component]](#function_component)
+    - [html!](#html)
+  - [まとめ](#まとめ)
+# 背景
+WebAssemblyを触ってみたい。Rustでフロントエンドの実装ができるらしい。  
+⇒シンプルなUIでMarkdownエディタを作ってみよう。
+
+
+# ディレクトリ構成
+````
+
+
+````
+# 本資料の目的
+- YewをもとにRustのマクロ(主に手続き型マクロ)の理解をしたい
+- Yewの仕組みをざっくり理解したい
+# 主要ライブラリ
+- Yew
+- pulldown-cmark
+- wasm-bindgen
+
+## Yew
+主な特徴は下記。
+- WebAssemblyによるRust製フロントエンドフレームワーク
+- ReactのJSXライクなHTMLマクロ
+- 仮想DOMを使ったレンダリング、Reactに寄せた状態管理機構
+
+### Yew内部で使われる主要ライブラリ
+- [wasm-bindgen](https://rustwasm.github.io/docs/wasm-bindgen/)
+  - Rustで書いたコード(関数)をJavascript側で利用するためのもの。以下のjs-sysとweb-sysを使ったRustコードもwasm-bindgenが最終的にjavascript側にexportしている。
+- [js-sys](https://docs.rs/js-sys/0.3.58/js_sys/)
+  - [Javascriptの標準ビルトインオブジェクト](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects)をRustに提供している。
+- [web-sys](https://rustwasm.github.io/wasm-bindgen/api/web_sys/)
+  - ブラウザが提供するWeb APIをRustに提供している。
+- [wasm-bindgen-futures](https://rustwasm.github.io/wasm-bindgen/api/wasm_bindgen_futures/)
+  - JavascriptのPromiseをRustのFuture型として操作することができるブリッジの役割を果たす。ビルド時にJavascriptのPromiseに変換する。
+
+### wasm-bindgen
+#[wasm-bindgen]アトリビュートはRustとJavascriptを変換することができ、Javascriptの型をRustのコードで表現することができる。(Javascript→Rustも可)  
+wasm-bindgen内で使われるweb-sys, js-sysがRustのコードをWebAPIやJavascriptAPIにバインドすることでこれを実現している。
+
+## Yewの実装
+
+### Componentの定義
+
+````rs
+#[proc_macro_error::proc_macro_error]
+#[proc_macro_attribute]
+pub fn function_component(attr: TokenStream, item: TokenStream) -> proc_macro::TokenStream {
+    let item = parse_macro_input!(item as FunctionComponent);
+    let attr = parse_macro_input!(attr as FunctionComponentName);
+
+    function_component_impl(attr, item)
+        .unwrap_or_else(|err| err.to_compile_error())
+        .into()
+}
+
+````
+
+
+
 ## Rustにおけるマクロとは
 メタプログラミングと呼ばれており、コードをコードによって生成するための機能。Rustを実装する際にある実装パターンの隠蔽をする方法として用いられることが多く、このマクロの実行はコンパイル時に行われる。
 
