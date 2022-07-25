@@ -30,8 +30,7 @@ WebAssemblyを触ってみたい。Rustでフロントエンドの実装がで�
 ## Yew
 主な特徴は下記。
 - WebAssemblyによるRust製フロントエンドフレームワーク
-- ReactのJSXライクなHTMLマクロ
-- 仮想DOMを使ったレンダリング、Reactに寄せた状態管理機構
+- ReactのJSXライクなHTMLマクロや状態管理機構を持つ
 
 ### Yew内部で使われる主要ライブラリ
 - [wasm-bindgen](https://rustwasm.github.io/docs/wasm-bindgen/)
@@ -46,6 +45,8 @@ WebAssemblyを触ってみたい。Rustでフロントエンドの実装がで�
 ### wasm-bindgen
 #[wasm-bindgen]アトリビュートはRustとJavascriptを変換することができ、Javascriptの型をRustのコードで表現することができる。(Javascript→Rustも可)  
 wasm-bindgen内で使われるweb-sys, js-sysがRustのコードをWebAPIやJavascriptAPIにバインドすることでこれを実現している。
+
+
 
 ## Yewの実装
 
