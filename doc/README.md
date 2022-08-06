@@ -71,13 +71,8 @@ pub fn home() -> Html {
 ``html!``マクロでは、インナーブロックで与えられたHTMLタグを処理し、HTMLとして返却する。
 
 
-
-画面ではこう表示される。(ボタンは別で配置している)
-
-![welcome](/welcome-my-editor.png)
-
 ## ``#[function_component]``と``html!``
-Yewでは、コンポ－ネントの定義には``#[function_component]``、JSX記法を利用する際には``html!``を使用した。
+Yewでは、コンポ－ネントの定義には``#[function_component]``、JSX記法でHTML要素を定義する際には``html!``を使用した。
 どちらも記法は異なるが、Rustではどちらもマクロと呼ばれる。
 ただし、``#[function_component]``のように関数や構造体に付与するものは手続き的マクロ、``html!``のように呼び出し元からは関数呼び出しのように呼ばれるものは宣言的マクロと分類される。
 
