@@ -2,12 +2,12 @@
 
 - [背景](#背景)
 - [本資料の目的](#本資料の目的)
-- [主要ライブラリ](#主要ライブラリ)
+  - [採用した主要ライブラリ](#採用した主要ライブラリ)
   - [Yew](#yew)
     - [Yew内部で使われる主要ライブラリ](#yew内部で使われる主要ライブラリ)
     - [wasm-bindgen](#wasm-bindgen)
-  - [Yewの実装](#yewの実装)
-    - [Componentの定義](#componentの定義)
+  - [YewでどのようにComponentを定義しているのか](#yewでどのようにcomponentを定義しているのか)
+  - [``#[function_component]``と``html!``](#function_componentとhtml)
   - [Rustにおけるマクロとは](#rustにおけるマクロとは)
     - [つまるところ何がうれしいのか](#つまるところ何がうれしいのか)
   - [Yewでのアトリビュート](#yewでのアトリビュート)
@@ -18,14 +18,19 @@
 WebAssemblyを触ってみたい。Rustでフロントエンドの実装ができるらしい。  
 ⇒シンプルなUIでMarkdownエディタを作ってみよう。
 
-
 # 本資料の目的
-- YewをもとにRustのマクロ(主に手続き型マクロ)の理解をしたい
+- Yewの実装を基にRustのマクロ(主に手続き型マクロ)の理解をしたい
 - Yewの仕組みをざっくり理解したい
-# 主要ライブラリ
+  
+## 採用した主要ライブラリ
 - Yew
+  - フロントエンドの開発用ライブラリ
 - pulldown-cmark
+  - Markdown記法のテキストをHTML形式に変換するparser
 - wasm-bindgen
+  - WebAssemblyモジュールを出力するためのライブラリ
+  
+
 
 ## Yew
 主な特徴は下記。
@@ -43,97 +48,39 @@ WebAssemblyを触ってみたい。Rustでフロントエンドの実装がで�
   - JavascriptのPromiseをRustのFuture型として操作することができるブリッジの役割を果たす。ビルド時にJavascriptのPromiseに変換する。
 
 ### wasm-bindgen
-#[wasm-bindgen]アトリビュートはRustとJavascriptを変換することができ、Javascriptの型をRustのコードで表現することができる。(Javascript→Rustも可)  
+#[wasm-bindgen]アトリビュートはRustとJavascriptを相互に変換することができ、Javascriptの型をRustのコードで表現することが可能。
 wasm-bindgen内で使われるweb-sys, js-sysがRustのコードをWebAPIやJavascriptAPIにバインドすることでこれを実現している。
 
 
 
-## Yewの実装
-
-### Componentの定義
-
-````rs
-#[proc_macro_error::proc_macro_error]
-#[proc_macro_attribute]
-pub fn function_component(attr: TokenStream, item: TokenStream) -> proc_macro::TokenStream {
-    let item = parse_macro_input!(item as FunctionComponent);
-    let attr = parse_macro_input!(attr as FunctionComponentName);
-
-    function_component_impl(attr, item)
-        .unwrap_or_else(|err| err.to_compile_error())
-        .into()
-}
-
-````
-
-
-
-## Rustにおけるマクロとは
-メタプログラミングと呼ばれており、コードをコードによって生成するための機能。Rustを実装する際にある実装パターンの隠蔽をする方法として用いられることが多く、このマクロの実行はコンパイル時に行われる。
-
-マクロは宣言的マクロ、手続き型マクロの2種類に分類することができ、``macro_rules!``で定義されるマクロが宣言的マクロ、``#[some_attribute]``で定義されるものは手続き的マクロと呼ばれているが、今回メインで紹介したいYewで利用されるアトリビュートというのはこの手続き的マクロに該当する。
-手続き型マクロの中には、``#[proc_macro]``、``#[proc_macro_attribute]``等があり、部分的にlintを無効化したり(例えばDeadCodeを許容する)、環境に応じたコンパイル自の挙動制御(下記参照)など。
-
-````rs
-// 実行環境がLinuxの場合のみコンパイルされる
-#[cfg(target_os="Linux")]
-fn are_you_on_linux(){
-    println!("You are runnnig linux!");
-}
-
-````
-
-
-### つまるところ何がうれしいのか
-構造体や関数の単位での付加情報の一覧性にも優れる他、複雑な内部動作や実装パターンを隠蔽し、構造体や関数に付加情報や振る舞いを付与することができる。
-
-````rs
-#[derive(Debug, Eq, PartialEq)]
-pub struct Foo(i16);
-
-#[derive(Debug, Copy, Eq, PartialEq)]
-pub struct Bar(i32);
-
-````
-
-上記のDeriveはプレリュードで提供されるようなよく使われるトレイトを宣言的に継承させ、derive()内に記載したトレイトの振るまいを持たせることができる。
-
-## Yewでのアトリビュート
-先ほど説明したマクロの中でも、foo!や#[derive(Foo)]などとは異なる、関数や構造体に対して付与するマクロのことをアトリビュートと呼ぶ。
-
-[Rust-by-example](https://doc.rust-jp.rs/rust-by-example-ja/attribute.html)には以下のように書かれていて、定義した関数や構造体を拡張するために使われる。
-> アトリビュートはモジュール、クレート、要素に対するメタデータです。以下がその使用目的です。
-> - コンパイル時の条件分岐
-> - クレート名、バージョン、種類（バイナリか、ライブラリか）の設定
-> - リントの無効化
-> - コンパイラ付属の機能（マクロ、グロブ、インポートなど）の使用
-> - 外部ライブラリへのリンク
-> - ユニットテスト用の関数を明示
-> - ベンチマーク用の関数を明示
-
-### #[function_component]
-Yewでは#[function_component]を使った関数の定義によってコンポーネントを構築していくが、この関数に付与するマクロがアトリビュートに当たる。
+## YewでどのようにComponentを定義しているのか
+Yewでは``#[function_component]``を付与した関数を定義することによってコンポーネントの実装を行う。
 
 ````rs
 use yew::prelude::*;
 
+// これはHomeコンポーネントとして認識される
 #[function_component(Home)]
 pub fn home() -> Html {
-   
     html! {
         <h1>{"Welcome to my editor!"}</h1>
-       
     }
 }
 ````
-
-ここでは、Home画面を構成するHomeコンポーネントを定義。``html!``マクロでは、インナーブロックで与えられたHTMLタグを処理し、HTMLとして返却する。
+この時に利用した``#[function_component]``をアトリビュートと呼ぶ。
+``html!``マクロでは、インナーブロックで与えられたHTMLタグを処理し、HTMLとして返却する。
 
 
 
 画面ではこう表示される。(ボタンは別で配置している)
 
 ![welcome](/welcome-my-editor.png)
+
+## ``#[function_component]``と``html!``
+Yewでは、コンポ－ネントの定義には``#[function_component]``、JSX記法を利用する際には``html!``を使用した。
+どちらも記法は異なるが、Rustではどちらもマクロと呼ばれる。
+ただし、``#[function_component]``のように関数や構造体に付与するものは手続き的マクロ、``html!``のように呼び出し元からは関数呼び出しのように呼ばれるものは宣言的マクロと分類される。
+
 
 
 #[function_component]アトリビュートの中身はこれ。
@@ -195,6 +142,68 @@ pub fn function_component_impl(
 }
 
 ````
+
+
+````rs
+#[proc_macro_error::proc_macro_error]
+#[proc_macro_attribute]
+pub fn function_component(attr: TokenStream, item: TokenStream) -> proc_macro::TokenStream {
+    let item = parse_macro_input!(item as FunctionComponent);
+    let attr = parse_macro_input!(attr as FunctionComponentName);
+
+    function_component_impl(attr, item)
+        .unwrap_or_else(|err| err.to_compile_error())
+        .into()
+}
+
+````
+
+
+
+## Rustにおけるマクロとは
+メタプログラミングと呼ばれており、コードをコードによって生成するための機能。Rustを実装する際にある実装パターンの隠蔽をする方法として用いられることが多く、このマクロの実行はコンパイル時に行われる。
+
+マクロは宣言的マクロ、手続き型マクロの2種類に分類することができ、``macro_rules!``で定義されるマクロが宣言的マクロ、``#[some_attribute]``で定義されるものは手続き的マクロと呼ばれているが、今回メインで紹介したいYewで利用されるアトリビュートというのはこの手続き的マクロに該当する。
+手続き型マクロの中には、``#[proc_macro]``、``#[proc_macro_attribute]``等があり、部分的にlintを無効化したり(例えばDeadCodeを許容する)、環境に応じたコンパイル自の挙動制御(下記参照)など。
+
+````rs
+// 実行環境がLinuxの場合のみコンパイルされる
+#[cfg(target_os="Linux")]
+fn are_you_on_linux(){
+    println!("You are runnnig linux!");
+}
+
+````
+
+
+### つまるところ何がうれしいのか
+構造体や関数の単位での付加情報の一覧性にも優れる他、複雑な内部動作や実装パターンを隠蔽し、構造体や関数に付加情報や振る舞いを付与することができる。
+
+````rs
+#[derive(Debug, Eq, PartialEq)]
+pub struct Foo(i16);
+
+#[derive(Debug, Copy, Eq, PartialEq)]
+pub struct Bar(i32);
+
+````
+
+上記のDeriveはプレリュードで提供されるようなよく使われるトレイトを宣言的に継承させ、derive()内に記載したトレイトの振るまいを持たせることができる。
+
+## Yewでのアトリビュート
+先ほど説明したマクロの中でも、foo!や#[derive(Foo)]などとは異なる、関数や構造体に対して付与するマクロのことをアトリビュートと呼ぶ。
+
+[Rust-by-example](https://doc.rust-jp.rs/rust-by-example-ja/attribute.html)には以下のように書かれていて、定義した関数や構造体を拡張するために使われる。
+> アトリビュートはモジュール、クレート、要素に対するメタデータです。以下がその使用目的です。
+> - コンパイル時の条件分岐
+> - クレート名、バージョン、種類（バイナリか、ライブラリか）の設定
+> - リントの無効化
+> - コンパイラ付属の機能（マクロ、グロブ、インポートなど）の使用
+> - 外部ライブラリへのリンク
+> - ユニットテスト用の関数を明示
+> - ベンチマーク用の関数を明示
+
+### #[function_component]
 
 ### html!
 html!のようなマクロは手続き的マクロの一種で、関数風マクロとも呼ばれる。宣言的マクロと非常に似ているが、``macro_rules!``ではなく、``#[proc_macro]``を利用し、手続き的マクロ同様にTokenStreamを受け取って生成したTokenStreamを返す点で違いが明確にある。
