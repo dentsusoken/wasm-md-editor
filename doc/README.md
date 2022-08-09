@@ -1,12 +1,11 @@
 <h1>TOC</h1>
 
-- [背景](#背景)
-- [ディレクトリ構成](#ディレクトリ構成)
 - [本資料の目的](#本資料の目的)
-- [主要ライブラリ](#主要ライブラリ)
-  - [Yew](#yew)
-    - [Yew内部で使われる主要ライブラリ](#yew内部で使われる主要ライブラリ)
-    - [wasm-bindgen](#wasm-bindgen)
+- [背景](#背景)
+- [Yew](#yew)
+- [WebAssemblyとは？](#webassemblyとは)
+  - [Yew内部で使われる主要ライブラリ](#yew内部で使われる主要ライブラリ)
+  - [wasm-bindgen](#wasm-bindgen)
   - [Yewの実装](#yewの実装)
     - [Componentの定義](#componentの定義)
   - [Rustにおけるマクロとは](#rustにおけるマクロとは)
@@ -15,31 +14,27 @@
     - [#[function_component]](#function_component)
     - [html!](#html)
   - [まとめ](#まとめ)
+
+# 本資料の目的
+- Yewの仕組みをざっくり理解する
+- YewをもとにRustのマクロ(主に手続き型マクロ)の理解をする
+
+
 # 背景
 WebAssemblyを触ってみたい。Rustでフロントエンドの実装ができるらしい。  
 ⇒シンプルなUIでMarkdownエディタを作ってみよう。
 
-
-# ディレクトリ構成
-````
-
-
-````
-# 本資料の目的
-- YewをもとにRustのマクロ(主に手続き型マクロ)の理解をしたい
-- Yewの仕組みをざっくり理解したい
-# 主要ライブラリ
-- Yew
-- pulldown-cmark
-- wasm-bindgen
-
-## Yew
+# Yew
 主な特徴は下記。
 - WebAssemblyによるRust製フロントエンドフレームワーク
 - ReactのJSXライクなHTMLマクロ
 - 仮想DOMを使ったレンダリング、Reactに寄せた状態管理機構
 
-### Yew内部で使われる主要ライブラリ
+# WebAssemblyとは？
+ブラウザ上で動作する
+
+
+## Yew内部で使われる主要ライブラリ
 - [wasm-bindgen](https://rustwasm.github.io/docs/wasm-bindgen/)
   - Rustで書いたコード(関数)をJavascript側で利用するためのもの。以下のjs-sysとweb-sysを使ったRustコードもwasm-bindgenが最終的にjavascript側にexportしている。
 - [js-sys](https://docs.rs/js-sys/0.3.58/js_sys/)
@@ -49,7 +44,7 @@ WebAssemblyを触ってみたい。Rustでフロントエンドの実装がで�
 - [wasm-bindgen-futures](https://rustwasm.github.io/wasm-bindgen/api/wasm_bindgen_futures/)
   - JavascriptのPromiseをRustのFuture型として操作することができるブリッジの役割を果たす。ビルド時にJavascriptのPromiseに変換する。
 
-### wasm-bindgen
+## wasm-bindgen
 #[wasm-bindgen]アトリビュートはRustとJavascriptを変換することができ、Javascriptの型をRustのコードで表現することができる。(Javascript→Rustも可)  
 wasm-bindgen内で使われるweb-sys, js-sysがRustのコードをWebAPIやJavascriptAPIにバインドすることでこれを実現している。
 
