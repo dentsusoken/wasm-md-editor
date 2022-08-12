@@ -16,6 +16,7 @@
     - [#[function_component]](#function_component)
     - [html!](#html)
   - [まとめ](#まとめ)
+- [TODO](#todo)
 
 # 本資料の目的
 - Yewの仕組みをざっくり理解する
@@ -54,7 +55,7 @@ Javascriptを補完、並行して動作するように設計されており、W
 
 ## Yew内部で使われる主要ライブラリ
 - [wasm-bindgen](https://rustwasm.github.io/docs/wasm-bindgen/)
-  - Rustで書いたコード(関数)をJavascript側で利用するためのもの。以下のjs-sysとweb-sysを使ったRustコードもwasm-bindgenが最終的にjavascript側にexportしている。
+  - Rustで書いたコード(関数)をJavascript側で利用するためのもの。以下のjs-sysとweb-sysを使ったRustコードもwasm-bindgenが最終的にjavascript側にexportしている。実際にYew内部ではイベントリスナーや、仮想DOMの更新等の動的な処理でwasmを利用している。
 - [js-sys](https://docs.rs/js-sys/0.3.58/js_sys/)
   - [Javascriptの標準ビルトインオブジェクト](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects)をRustに提供している。
 - [web-sys](https://rustwasm.github.io/wasm-bindgen/api/web_sys/)
@@ -299,3 +300,5 @@ pub fn html(input: TokenStream) -> TokenStream {
 - 手続き的マクロでは、ソースコードをコピーしてマクロに渡し、TokenStreamから構文木に変換。それを再度TokenStreamに型を戻したのちにマクロ呼び出し元に返却する尾という流れでソースコードを出力していた。これによって開発者はコードの記述量を減らし、楽をすることが可能になった。
 - Rustのマクロは、呼び出し側での使い勝手はかなり便利になる反面、どういう状況下でマクロを作ってもよいかを適切に判断しないと、マクロ量産されてメンテナンスに苦しむことになりそう。呼び出し側でコーディングする量が激減する、宣言的にアトリビュートとして付与できる、macro_rules!による宣言的マクロで、関数として定義するよりも可読性も向上する、等のメリットを享受できるのであればマクロを利用することはいいかもしれない。
 
+# TODO
+Componentはランタイム時に解決なのかコンパイル時に解決なのか
