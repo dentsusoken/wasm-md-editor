@@ -920,6 +920,7 @@ dependencies = [
  "js-sys",
  "pulldown-cmark",
  "stylist",
+ "wasm-bindgen",
  "web-sys",
  "yew",
  "yew-router",
