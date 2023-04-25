@@ -1,7 +1,7 @@
-use crate::{components::home::Home, Routing};
+use crate::{components::home::Home, Route};
 use stylist::style;
 use yew::prelude::*;
-use yew_router::{history::History, hooks::use_history};
+use yew_router::prelude::*;
 
 #[function_component(Top)]
 pub fn top() -> Html {
@@ -28,14 +28,14 @@ pub fn top() -> Html {
         "#
     )
     .expect("Failed to styled.");
-    let history = use_history().unwrap();
-    let onclick = Callback::once(move |_| history.push(Routing::Editor));
+    let navigator = use_navigator().unwrap();
+    let onclick = Callback::from(move |_| navigator.push(&Route::Editor));
 
     html! {
         <>
-            <div class={container}>
+            <div class={classes!(container)}>
                 <Home />
-                <button class={button} {onclick}>{"Start"}</ button>
+                <button class={classes!(button)} {onclick}>{"Start"}</ button>
             </div>
         </>
     }

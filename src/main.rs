@@ -7,7 +7,7 @@ use pages::not_found::NotFound;
 use pages::top::Top;
 
 #[derive(Clone, Routable, PartialEq)]
-pub enum Routing {
+pub enum Route {
     #[at("/")]
     Home,
     #[at("/editor")]
@@ -23,24 +23,19 @@ pub enum Msg {
 fn app() -> Html {
     html! {
         <BrowserRouter>
-            <Switch<Routing> render={Switch::render(switch)} />
+            <Switch<Route> render={switch} />
         </BrowserRouter>
     }
 }
 
-fn switch(routes: &Routing) -> Html {
+fn switch(routes: Route) -> Html {
     match routes {
-        Routing::Home => html! {
-            <Top />
-        },
-        Routing::Editor => html! {
-            <Text  />
-
-        },
-        Routing::NotFound => html! {<NotFound />},
+        Route::Home => html! {<Top />},
+        Route::Editor => html! {<Text/>},
+        Route::NotFound => html! {<NotFound />},
     }
 }
 
 fn main() {
-    yew::start_app::<App>();
+    yew::Renderer::<App>::new().render();
 }

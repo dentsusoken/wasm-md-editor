@@ -9,26 +9,44 @@ use yew::virtual_dom::VNode;
 // #[function_component(Text)]
 #[styled_component(Text)]
 pub fn text() -> Html {
-    let style = style!(
+    let text = style!(
         r#"
         background-color: #1e2126;
         color: #fff;
+        resize: none;
         font-family: inherit;
-        margin: 2rem;
+        width:100%;
+        height:100%;
         "#
     )
     .expect("Failed to styled.");
 
     let container = style!(
         r#"
-        display: flex;
+        margin: 10px;
         "#
     )
     .expect("Failed to styled.");
 
-    let item = style!(
+    let split = style!(
         r#"
-        
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        "#
+    )
+    .expect("Failed to styled.");
+    let splitInput = style!(
+        r#"
+        left: 0;
+        "#
+    )
+    .expect("Failed to styled.");
+
+    let splitOutput = style!(
+        r#"
+        right: 0;
+        margin: -25px;
         "#
     )
     .expect("Failed to styled.");
@@ -57,12 +75,13 @@ pub fn text() -> Html {
 
     html! {
         <>
+        <h1>{"Markdown Editor"}</h1>
         <div class="markdown-body">
-            <div class={container}>
-                <div class={item}>
-                    <textarea class={style} rows="140" cols="100" value={value.to_string()} oninput={on_input} />
+            <div class={classes!(container)}>
+                <div class={classes!(split.clone(), splitInput)}>
+                    <textarea class={classes!(text)} rows="100%" cols="100%" value={value.to_string()} oninput={on_input} />
                 </div>
-                <div class="item" >
+                <div class={classes!(split.clone(), splitOutput)} >
                     {vnode}
                 </div>
             </div>
