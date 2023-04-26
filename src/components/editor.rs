@@ -36,14 +36,14 @@ pub fn text() -> Html {
         "#
     )
     .expect("Failed to styled.");
-    let splitInput = style!(
+    let split_input = style!(
         r#"
         left: 0;
         "#
     )
     .expect("Failed to styled.");
 
-    let splitOutput = style!(
+    let split_output = style!(
         r#"
         right: 0;
         margin: -25px;
@@ -78,10 +78,10 @@ pub fn text() -> Html {
         <h1>{"Markdown Editor"}</h1>
         <div class="markdown-body">
             <div class={classes!(container)}>
-                <div class={classes!(split.clone(), splitInput)}>
+                <div class={classes!(split.clone(), split_input)}>
                     <textarea class={classes!(text)} rows="100%" cols="100%" value={value.to_string()} oninput={on_input} />
                 </div>
-                <div class={classes!(split.clone(), splitOutput)} >
+                <div class={classes!(split.clone(), split_output)} >
                     {vnode}
                 </div>
             </div>
