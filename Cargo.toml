@@ -8,9 +8,9 @@ edition = "2021"
 crate-type = ["cdylib", "rlib"]
 [dependencies]
 js-sys = "0.3.57"
-pulldown-cmark =  "0.9.1"
-yew = { version = "0.20.0", features = ["csr"] }
-yew-router = "0.17.0"
+pulldown-cmark =  "0.10.3"
+yew = { version = "0.21.0", features = ["csr"] }
+yew-router = "0.18.0"
 web-sys = { version = "0.3", features = ["Event","EventTarget","InputEvent"] }
-wasm-bindgen = "0.2.84"
-stylist = {version = "0.11.0", features = ["yew_integration"]}
+wasm-bindgen = "0.2.92"
+stylist = {version = "0.13.0", features = ["yew_integration"]}

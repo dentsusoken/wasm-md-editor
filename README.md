@@ -7,3 +7,8 @@ wasm-md-editorはフロントエンドに[Yew](https://yew.rs/ja/)を、Markdown
 ````bash
 $ trunk serve
 ````
+
+
+# Tips
+https://github.com/trunk-rs/trunk/issues/443 のようにtrunk serveでwasm-bindgenのダウンロードに失敗する場合、手元のwasm-bindgenコマンドとソース上のバイナリのバージョンが一致していない可能性あり。
+（手元のwasm-bindgenをtarを落としてきてC/users直下に置いたら治った）
