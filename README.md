@@ -7,4 +7,3 @@ wasm-md-editorはフロントエンドに[Yew](https://yew.rs/ja/)を、Markdown
 ````bash
 $ trunk serve
 ````
-https://zenn.dev/matcha_choco010/articles/2022-06-11-trunk-rust-wasm#trunk
