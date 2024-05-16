@@ -2,13 +2,18 @@
 Rust製の軽量なデスクトップアプリ開発フレームワーク。
 従来はElectronが主流（vscode, discordが代表例）だったが、メモリ・CPU使用量、アプリのバンドルサイズがより軽量化されたTauriが注目を集めている。
 
-
 - ElectronはChromiumを使ってレンダリングを行うため思い
 - TauriはWebViewライブラリのWRYを使うことでOS標準のWebView機能を利用
+
+Gitのスター数もかなりElectronをまくる勢い
+![](./img/star-history-2024516.png)
 
 # Tauriのアーキテクチャ
 ![a](./img/tauri-archi.png)
 https://tauri.app/v1/references/architecture/
+
+
+## WRY
 
 # 実施手順
 
