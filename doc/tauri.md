@@ -36,13 +36,13 @@ Webページをデスクトップアプリケーションに埋め込んで利�
 https://tauri.app/v1/references/architecture/
 
 - tauri
-  - tauri の主要パッケージをまとめたもので、内部に tauri ランタイム（webView ライブラリとの連携）を持つ
+  - tauri の主要パッケージをまとめたもので、内部に tauri ランタイムを持つ
 - tauri-runtime-wry
   - WRYを制御するためのtauriランタイム
 - WRY
   - WRYは各OSのWebViewをサポートしたラッパーライブラリ。tauriからOS標準のWebView機能を提供する。
 - TAO
-  - アプリケーションのウインドウを操作するためのcrate
+  - アプリケーションのウインドウを操作するためのライブラリ
 
 
 # Tauri導入
